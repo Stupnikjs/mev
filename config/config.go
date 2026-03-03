@@ -3,10 +3,15 @@ package config
 import "os"
 
 // Dans config.go
+var (
+	RelayMainnet = "https://relay.flashbots.net"
+	RelaySepolia = "https://relay-sepolia.flashbots.net"
+)
 
 func Load() {
 	_ = os.Getenv("BOT_PRIV_KEY")  // wallet avec des ETH → signe les txs
 	_ = os.Getenv("AUTH_PRIV_KEY") // wallet vide → signe les headers HTTP
+
 	/*
 
 	   | Clé | Rôle | Besoin de fonds ? |

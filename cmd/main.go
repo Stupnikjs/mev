@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"os"
 
+	"github.com/Stupnikjs/mev/config"
+	"github.com/Stupnikjs/mev/internal/client"
 	"github.com/lmittmann/w3"
 	"github.com/lmittmann/w3/module/eth"
 )
@@ -19,9 +22,15 @@ var (
 	// Pool WETH/USDC Uniswap V2 mainnet
 	// token0 = USDC, token1 = WETH
 	addrPair = w3.A("0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc")
+	rpc_pub  = "https://ethereum-rpc.publicnode.com"
+	pk       = os.Getenv("PRIVATE_KEY")
 )
 
 func main() {
+	clients, err := client.New(rpc_pub, config.RelayMainnet, pk)
+}
+
+func example() {
 	// 1. Connexion RPC — RPC public gratuit, pas besoin d'Alchemy pour ce test
 	client, err := w3.Dial("https://ethereum-rpc.publicnode.com")
 	if err != nil {
