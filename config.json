@@ -1,0 +1,10 @@
+{
+   "sepolia_v3_factory": "0x0227628f3F023bb0B980b67D528571c95c6DaC1c",
+   "sepolia_v3_position_manager": "0x1238536071E1c6773D4144E944e09F854745d106",
+  "pool1" : { "tokenA": "0xF40E9240464482db4B0e95bEAcb14C3dE04C5715",
+  "tokenB": "0xb70C485f324A6bF9e0455eE2B5F08A877e051a98", 
+  "fee": 3000
+    },
+  "sepolia_rpc": "", 
+  "mainnet_rpc": ""
+}
