@@ -1,7 +1,6 @@
 package strategy
 
 import (
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/lmittmann/w3"
 )
 
@@ -23,8 +22,4 @@ var UniswapV2Funcs = map[string]*w3.Func{
 	"0x791ac947": w3.MustNewFunc("swapExactTokensForETH(uint256,uint256,address[],address,uint256)", ""),
 	"0x18cbafe5": w3.MustNewFunc("swapTokensForExactETH(uint256,uint256,address[],address,uint256)", ""),
 	// ajoute les autres si besoin (addLiquidity, removeLiquidity...)
-}
-
-func GetPoolBalance(poolAddress common.Address) {
-
 }
