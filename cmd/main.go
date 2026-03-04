@@ -1,13 +1,15 @@
 package main
 
 import (
+	"encoding/hex"
 	"fmt"
 	"log"
 	"math/big"
 	"os"
 
-	"github.com/Stupnikjs/mev/config"
-	"github.com/Stupnikjs/mev/internal/client"
+	"github.com/Stupnikjs/mev/internal/mempool"
+	"github.com/Stupnikjs/mev/internal/strategy"
+	"github.com/Stupnikjs/mev/internal/utils"
 	"github.com/lmittmann/w3"
 	"github.com/lmittmann/w3/module/eth"
 )
@@ -22,12 +24,36 @@ var (
 	// Pool WETH/USDC Uniswap V2 mainnet
 	// token0 = USDC, token1 = WETH
 	addrPair = w3.A("0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc")
-	rpc_pub  = "https://ethereum-rpc.publicnode.com"
-	pk       = os.Getenv("PRIVATE_KEY")
+	// rpc_pub  = "https://ethereum-rpc.publicnode.com"
+	ws_dRPC = "wss://lb.drpc.live/ethereum/AhuxMhCqfkI8pF_0y4Fpi89GWcIMFIwR8ZsatuZZzRRv"
+	pk      = os.Getenv("PRIVATE_KEY")
 )
 
 func main() {
-	clients, err := client.New(rpc_pub, config.RelayMainnet, pk)
+	endpoints := map[string]string{
+		"ws_dRPC": ws_dRPC,
+	}
+	extractor, err := mempool.NewExtractor(endpoints)
+	if err != nil {
+		log.Fatal(err)
+	}
+	txChan := extractor.TxChan
+	go extractor.ListenToMempool()
+	go func() {
+		for tx := range txChan {
+			// Process your []byte transaction here
+			selector := hex.EncodeToString(tx[:4])
+			if strategy.UniswapV2SwapSelectors[selector] != "" {
+				utils.ArgsFromCallData(tx)
+
+			}
+
+		}
+	}()
+
+	// Keep the main function alive
+	select {}
+
 }
 
 func example() {
