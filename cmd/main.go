@@ -13,10 +13,6 @@ import (
 
 var (
 	// Fonction ABI déclarée directement en Go, pas de fichier JSON
-	funcGetReserves = w3.MustNewFunc(
-		"getReserves()",
-		"uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast",
-	)
 
 	// Pool WETH/USDC Uniswap V2 mainnet
 	// token0 = USDC, token1 = WETH
